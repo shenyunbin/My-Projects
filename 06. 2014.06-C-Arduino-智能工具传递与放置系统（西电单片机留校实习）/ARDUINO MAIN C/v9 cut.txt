@@ -1,0 +1,339 @@
+
+void Y0_lift()
+{
+    switch (yi_mode) 
+    {
+    case (0):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(90,100,150);
+        yi_mode+=1;
+      }
+      break;
+    case (1):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(90,100,100);
+        yi_mode+=1;
+      }
+      break;
+    case (2):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(90,65,100);
+        yi_mode+=1;
+      }
+      break;
+    case (3):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(90,65,130);
+        yi_mode+=1;
+      }
+      break;
+    case (4):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(90,100,150);
+        yi_mode=100;
+      }
+      break;
+    default:
+      break;
+    }  
+
+}
+
+void Y1_lift()
+{
+    switch (yi_mode) 
+    {
+    case (0):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(56,100,150);
+        yi_mode+=1;
+      }
+      break;
+    case (1):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(52,110,150);
+        yi_mode+=1;
+      }
+      break;
+    case (2):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(52,110,90);
+        yi_mode+=1;
+      }
+      break;
+    case (3):
+      if(g_movflag) 
+      { 
+        set234mov(52,83,90);
+        yi_mode+=1;
+      }
+      break;
+    case (4):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(56,88,150);
+        yi_mode+=1;
+      }
+      break;
+    case (5):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(56,100,150);
+        yi_mode+=1;
+      }
+      break;
+    case (6):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,100,150);
+        yi_mode=100;
+      }
+      break;
+    default:
+        g_mode=504;
+      break;
+    }  
+
+}
+
+void Y2_lift()
+{
+    switch (yi_mode) 
+    {
+    case (0):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,100,20);
+        yi_mode+=1;
+      }
+      break;
+    case (1):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,63,20);
+        yi_mode+=1;
+      }
+      break;
+    case (2):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(25,63,20);
+        yi_mode+=1;
+      }
+      break;
+    case (3):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(25,63,125);
+        yi_mode+=1;
+      }
+      break;
+    case (4):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,100,125);
+        yi_mode=100;
+      }
+      break;
+    case (5):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,100,150);
+        yi_mode+=1;
+      }
+      break;
+    default:
+        g_mode=504;
+      break;
+    }  
+}
+
+void positdown(int yi)//机器人放到纵坐标为yi的物架程序
+{
+  switch (yi) 
+    {
+    case (0):
+        Y0_down();
+      break;
+    case (1):
+        Y1_down();
+      break;
+    case (2):
+        Y2_down();
+      break;
+    default:
+      break;
+    }  
+}
+
+void Y0_down()
+{
+    switch (yi_mode) 
+    {
+    case (0):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(60,100,150);
+        yi_mode+=1;
+      }
+      break;
+    case (1):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(60,90,150);
+        yi_mode+=1;
+      }
+      break;
+    case (2):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(60,90,106);
+        yi_mode+=1;
+      }
+      break;
+    case (3):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(60,72,106);
+        yi_mode+=1;
+      }
+      break;
+    case (4):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(60,72,50);
+        yi_mode+=1;
+      }
+      break;
+    case (5):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(60,100,50);
+        yi_mode+=1;
+      }
+      break;
+    case (6):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(60,100,150);
+        yi_mode+=1;
+      }
+      break;
+    case (7):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,100,150);
+        yi_mode=100;
+      }
+      break;
+    default:
+        g_mode=504;
+      break;
+    }  
+
+}
+
+void Y1_down()
+{
+  yi_mode=100;
+}
+
+void Y2_down()
+{
+    switch (yi_mode) 
+    {
+    case (0):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,100,70);
+        yi_mode+=1;
+      }
+      break;
+    case (1):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,35,70);
+        yi_mode+=1;
+      }
+      break;
+    case (2):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(52,35,70);
+        yi_mode+=1;
+      }
+      break;
+    case (3):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(52,35,105);
+        yi_mode+=1;
+      }
+      break;
+    case (4):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(52,97,105);
+        yi_mode+=1;
+      }
+      break;
+    case (5):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(52,100,105);
+        yi_mode+=1;
+      }
+      break;
+    case (6):
+      if(g_movflag) 
+      { 
+        g_movflag=0;  
+        set234mov(10,100,150);
+        yi_mode=100;
+      }
+      break;
+    default:
+        g_mode=504;
+      break;
+    }  
+
+}

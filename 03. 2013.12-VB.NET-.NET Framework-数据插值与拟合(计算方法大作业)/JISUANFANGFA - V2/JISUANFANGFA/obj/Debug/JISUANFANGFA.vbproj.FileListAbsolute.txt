@@ -1,0 +1,59 @@
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\bin\Debug\JISUANFANGFA.exe.config
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\bin\Debug\JISUANFANGFA.exe
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\bin\Debug\JISUANFANGFA.pdb
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\bin\Debug\JISUANFANGFA.xml
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\obj\Debug\JISUANFANGFA.Form1.resources
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\obj\Debug\JISUANFANGFA.Resources.resources
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\obj\Debug\JISUANFANGFA.vbproj.GenerateResource.Cache
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\obj\Debug\JISUANFANGFA.exe
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\obj\Debug\JISUANFANGFA.xml
+C:\Users\SYB\AppData\Local\Temporary Projects\WindowsApplication1\obj\Debug\JISUANFANGFA.pdb
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.exe.config
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.exe
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.xml
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.pdb
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.exe
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.pdb
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.xml
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.Form1.resources
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.Resources.resources
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.vbproj.GenerateResource.Cache
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.exe.manifest
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.application
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.TrustInfo.xml
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.exe.manifest
+C:\Users\SYB\Documents\Visual Studio 2012\Projects\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.application
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.exe.config
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.exe
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.xml
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.pdb
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.exe.manifest
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.application
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.exe
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.pdb
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.xml
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.Form1.resources
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.Resources.resources
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.vbproj.GenerateResource.Cache
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.TrustInfo.xml
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.exe.manifest
+C:\Users\SYB\Desktop\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.application
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA\JISUANFANGFA\bin\Debug\JISUANFANGFA.exe.config
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.exe
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.xml
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA\JISUANFANGFA\obj\Debug\JISUANFANGFA.pdb
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA.vbproj.GenerateResource.Cache
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\bin\Debug\JISUANFANGFA V2.exe.config
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\bin\Debug\JISUANFANGFA V2.exe.manifest
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\bin\Debug\JISUANFANGFA V2.application
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\bin\Debug\JISUANFANGFA V2.exe
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\bin\Debug\JISUANFANGFA V2.pdb
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\bin\Debug\JISUANFANGFA V2.xml
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA_V2.Form1.resources
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA_V2.Resources.resources
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA V2.TrustInfo.xml
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA V2.exe.manifest
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA V2.application
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA V2.exe
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA V2.xml
+C:\Users\SYB\Desktop\各科资料汇总\计算方法\JISUANFANGFA - V2\JISUANFANGFA\obj\Debug\JISUANFANGFA V2.pdb

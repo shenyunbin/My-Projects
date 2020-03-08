@@ -1,0 +1,162 @@
+Determining if the include file sys/endian.h exists failed with the following output:
+Change Dir: /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_aef0b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_aef0b.dir/build.make CMakeFiles/cmTC_aef0b.dir/build
+make[1]: Entering directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_aef0b.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_aef0b.dir/CheckIncludeFile.c.o   -c /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:10: fatal error: sys/endian.h: No such file or directory
+ #include <sys/endian.h>
+          ^~~~~~~~~~~~~~
+compilation terminated.
+CMakeFiles/cmTC_aef0b.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_aef0b.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_aef0b.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_aef0b/fast' failed
+make: *** [cmTC_aef0b/fast] Error 2
+
+
+Determining if the include file windows.h exists failed with the following output:
+Change Dir: /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_cc193/fast"
+/usr/bin/make -f CMakeFiles/cmTC_cc193.dir/build.make CMakeFiles/cmTC_cc193.dir/build
+make[1]: Entering directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_cc193.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_cc193.dir/CheckIncludeFile.c.o   -c /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:10: fatal error: windows.h: No such file or directory
+ #include <windows.h>
+          ^~~~~~~~~~~
+compilation terminated.
+CMakeFiles/cmTC_cc193.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_cc193.dir/CheckIncludeFile.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_cc193.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_cc193/fast' failed
+make: *** [cmTC_cc193/fast] Error 2
+
+
+Determining if the function lzo1x_1_15_compress exists in the lzo2 failed with the following output:
+Change Dir: /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_dfac5/fast"
+/usr/bin/make -f CMakeFiles/cmTC_dfac5.dir/build.make CMakeFiles/cmTC_dfac5.dir/build
+make[1]: Entering directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_dfac5.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=lzo1x_1_15_compress   -o CMakeFiles/cmTC_dfac5.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_dfac5
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dfac5.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=lzo1x_1_15_compress    -rdynamic CMakeFiles/cmTC_dfac5.dir/CheckFunctionExists.c.o  -o cmTC_dfac5 -llzo2 
+/usr/bin/ld: cannot find -llzo2
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_dfac5.dir/build.make:97: recipe for target 'cmTC_dfac5' failed
+make[1]: *** [cmTC_dfac5] Error 1
+make[1]: Leaving directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_dfac5/fast' failed
+make: *** [cmTC_dfac5/fast] Error 2
+
+
+Performing C++ SOURCE FILE Test HAVE_VISUAL_STUDIO_ARCH_AVX failed with the following output:
+Change Dir: /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_94198/fast"
+/usr/bin/make -f CMakeFiles/cmTC_94198.dir/build.make CMakeFiles/cmTC_94198.dir/build
+make[1]: Entering directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_94198.dir/src.cxx.o
+/usr/bin/c++    -DHAVE_VISUAL_STUDIO_ARCH_AVX   /arch:AVX -o CMakeFiles/cmTC_94198.dir/src.cxx.o -c /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: /arch:AVX: No such file or directory
+CMakeFiles/cmTC_94198.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_94198.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_94198.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_94198/fast' failed
+make: *** [cmTC_94198/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAVE_VISUAL_STUDIO_ARCH_AVX2 failed with the following output:
+Change Dir: /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e9f36/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e9f36.dir/build.make CMakeFiles/cmTC_e9f36.dir/build
+make[1]: Entering directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e9f36.dir/src.cxx.o
+/usr/bin/c++    -DHAVE_VISUAL_STUDIO_ARCH_AVX2   /arch:AVX2 -o CMakeFiles/cmTC_e9f36.dir/src.cxx.o -c /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: /arch:AVX2: No such file or directory
+CMakeFiles/cmTC_e9f36.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_e9f36.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_e9f36.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_e9f36/fast' failed
+make: *** [cmTC_e9f36/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test SNAPPY_HAVE_SSSE3 failed with the following output:
+Change Dir: /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_87637/fast"
+/usr/bin/make -f CMakeFiles/cmTC_87637.dir/build.make CMakeFiles/cmTC_87637.dir/build
+make[1]: Entering directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_87637.dir/src.cxx.o
+/usr/bin/c++    -DSNAPPY_HAVE_SSSE3   -o CMakeFiles/cmTC_87637.dir/src.cxx.o -c /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx
+In file included from /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx:2:0:
+/usr/lib/gcc/x86_64-linux-gnu/7/include/tmmintrin.h: In function ‘int main()’:
+/usr/lib/gcc/x86_64-linux-gnu/7/include/tmmintrin.h:136:1: error: inlining failed in call to always_inline ‘__m128i _mm_shuffle_epi8(__m128i, __m128i)’: target specific option mismatch
+ _mm_shuffle_epi8 (__m128i __X, __m128i __Y)
+ ^~~~~~~~~~~~~~~~
+/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx:8:78: note: called from here
+   const __m128i pattern = _mm_shuffle_epi8(_mm_loadl_epi64(src), shuffle_mask);
+                                                                              ^
+In file included from /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx:2:0:
+/usr/lib/gcc/x86_64-linux-gnu/7/include/tmmintrin.h:136:1: error: inlining failed in call to always_inline ‘__m128i _mm_shuffle_epi8(__m128i, __m128i)’: target specific option mismatch
+ _mm_shuffle_epi8 (__m128i __X, __m128i __Y)
+ ^~~~~~~~~~~~~~~~
+/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx:8:78: note: called from here
+   const __m128i pattern = _mm_shuffle_epi8(_mm_loadl_epi64(src), shuffle_mask);
+                                                                              ^
+CMakeFiles/cmTC_87637.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_87637.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_87637.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_87637/fast' failed
+make: *** [cmTC_87637/fast] Error 2
+
+Source file was:
+
+#include <tmmintrin.h>
+
+int main() {
+  const __m128i *src = 0;
+  __m128i dest;
+  const __m128i shuffle_mask = _mm_load_si128(src);
+  const __m128i pattern = _mm_shuffle_epi8(_mm_loadl_epi64(src), shuffle_mask);
+  _mm_storeu_si128(&dest, pattern);
+  return 0;
+}
+Performing C++ SOURCE FILE Test SNAPPY_HAVE_BMI2 failed with the following output:
+Change Dir: /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_33d92/fast"
+/usr/bin/make -f CMakeFiles/cmTC_33d92.dir/build.make CMakeFiles/cmTC_33d92.dir/build
+make[1]: Entering directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_33d92.dir/src.cxx.o
+/usr/bin/c++    -DSNAPPY_HAVE_BMI2   -o CMakeFiles/cmTC_33d92.dir/src.cxx.o -c /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx
+In file included from /usr/lib/gcc/x86_64-linux-gnu/7/include/immintrin.h:83:0,
+                 from /mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx:2:
+/usr/lib/gcc/x86_64-linux-gnu/7/include/bmi2intrin.h: In function ‘int main()’:
+/usr/lib/gcc/x86_64-linux-gnu/7/include/bmi2intrin.h:39:1: error: inlining failed in call to always_inline ‘unsigned int _bzhi_u32(unsigned int, unsigned int)’: target specific option mismatch
+ _bzhi_u32 (unsigned int __X, unsigned int __Y)
+ ^~~~~~~~~
+/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp/src.cxx:4:19: note: called from here
+   return _bzhi_u32(0, 1);
+          ~~~~~~~~~^~~~~~
+CMakeFiles/cmTC_33d92.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_33d92.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_33d92.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/mnt/c/WKS/snappy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_33d92/fast' failed
+make: *** [cmTC_33d92/fast] Error 2
+
+Source file was:
+
+#include <immintrin.h>
+int main() {
+  return _bzhi_u32(0, 1);
+}

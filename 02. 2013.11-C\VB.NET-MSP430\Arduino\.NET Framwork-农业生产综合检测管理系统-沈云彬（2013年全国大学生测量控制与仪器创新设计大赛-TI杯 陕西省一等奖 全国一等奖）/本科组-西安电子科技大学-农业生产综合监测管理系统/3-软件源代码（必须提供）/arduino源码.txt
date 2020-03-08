@@ -1,0 +1,90 @@
+#include <MsTimer2.h>
+
+// Switch on LED on pin 13 each second
+int s0=4,s1=5,s2=6,s3=7;
+int c1,c2,down,high,up,hz[8],i,ii,mode,sen;
+long int color;
+void flash() {
+switch(mode)
+{
+case 0:
+  if(Serial.available())
+    {
+    if(Serial.read()=='1'){sen=1;}
+    break;
+    }
+  digitalWrite(s2,LOW);
+  digitalWrite(s3,LOW);
+  mode=1;
+break;
+
+case 1:
+  hz[5]=color/6;
+  color=0;
+  digitalWrite(s2,HIGH);
+  digitalWrite(s3,HIGH);
+  mode=2;
+break;
+
+case 2:
+  hz[6]=color/6;
+  color=0;  
+  digitalWrite(s2,LOW);
+  digitalWrite(s3,HIGH);
+  mode=3;
+break;
+
+case 3:
+  hz[7]=color/6;
+  color=0;
+if(sen==1)
+{
+  Serial.write(1);
+  for(i=0;i<8;i++)
+  {
+    Serial.write(hz[i]>>8);
+    Serial.write(hz[i]);
+    hz[i]=0;
+  }
+  Serial.write(0xFF);
+  mode=0;
+  sen=0;
+}
+break;
+  }
+}
+
+
+void setup() {
+  pinMode(s0,OUTPUT);
+  pinMode(s1,OUTPUT);
+  pinMode(s2,OUTPUT);
+  pinMode(s3,OUTPUT);
+  digitalWrite(s0,HIGH);
+  digitalWrite(s1,HIGH);
+  Serial.begin(9600);
+  attachInterrupt(0,count,CHANGE);
+  MsTimer2::set(250, flash); // 500ms period
+  MsTimer2::start();
+  
+}
+
+void loop() {
+    c1=c2;
+    c2 = analogRead(A0);
+    if(up==0 && (c2-c1>0)){up=1;down=c1;}    
+    if(up==1 && (c2-c1<0))
+     {
+       high=c1;
+       for(i=0;i<4;i++)
+       {
+       if((high-down)==i+1){up=0;hz[i]=hz[i]+1;}
+       }
+       if((high-down)>4){up=0;hz[4]=hz[4]+1;}
+      }
+}
+
+void count()
+{
+color=color+1;
+}

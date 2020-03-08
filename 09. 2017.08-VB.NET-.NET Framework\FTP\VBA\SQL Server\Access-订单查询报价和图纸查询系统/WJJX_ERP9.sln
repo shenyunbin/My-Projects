@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WJJX_ERP10", "WJJX_ERP9\WJJX_ERP10.vbproj", "{97F49810-CC93-4D2C-A18F-04EC11D83867}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Debug|Any CPU.Build.0 = Debug|x86
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Debug|x86.ActiveCfg = Debug|x86
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Debug|x86.Build.0 = Debug|x86
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Release|x86.ActiveCfg = Release|x86
+		{97F49810-CC93-4D2C-A18F-04EC11D83867}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

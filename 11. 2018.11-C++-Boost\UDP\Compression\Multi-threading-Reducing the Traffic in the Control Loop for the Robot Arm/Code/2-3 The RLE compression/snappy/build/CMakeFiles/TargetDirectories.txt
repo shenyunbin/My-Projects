@@ -1,0 +1,9 @@
+/mnt/c/WKS/snappy/build/CMakeFiles/install/strip.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/install.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/snappy.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/install/local.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/snappy_unittest.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/test.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/list_install_components.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/edit_cache.dir
+/mnt/c/WKS/snappy/build/CMakeFiles/rebuild_cache.dir

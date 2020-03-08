@@ -1,0 +1,925 @@
+Imports System.IO.Ports
+Imports System.Text
+
+Public Class Form1
+    Dim ab(8), xi, change(309), sum(309), hz(8), adc(6), autosend, temp(246), te, humi(246), hu, illu(246), il, sound1, sound2, shidu As Integer
+    Dim autosend2, guangzhao, dianzu, qiwen, hard(40), ha, bum, yingdu, shifei_flag, jiance_flag, jiance_flag2, ceshi, beep1, beep2 As Integer
+    Dim mode6, isy1(502), isy2(502), isz(502), igz(502), iwd(502), isd(502), idz(502), xs, iround, illu2 As Integer
+    Dim ratio(309), rgb, iround1, iround2, iround3, iround4, iround5, iround6, beep3, beep4 As Double
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        For Each sp As String In SerialPort.GetPortNames
+            ComboCOM.Items.Add(sp)
+        Next
+        ComboCOM.Sorted = True
+        REM  ComboCOM.SelectedIndex = 0
+
+    End Sub
+
+
+    Private Sub ButtonOPEN_Click(sender As Object, e As EventArgs) Handles ButtonOPEN.Click
+        Dim mportname As String   
+        mportname = ComboCOM.SelectedItem.ToString
+
+            RS232.PortName = mportname
+            RS232.Encoding = Encoding.ASCII
+            If Not RS232.IsOpen Then
+                RS232.Open()
+                ButtonSEND.Enabled = True
+                Timer1.Interval = 100                                 REM  ddd
+                Timer1.Enabled = True
+
+            Else
+                MsgBox("通信端口已被打开！")
+            End If
+
+    End Sub
+
+
+    Private Sub ButtonSEND_Click(sender As Object, e As EventArgs) Handles ButtonSEND.Click
+        RS232.Write(TextSEND.Text & vbCr)
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Dim instring As String
+        Dim i, c, hi(8) As Integer
+        Dim bytes(100) As Byte
+        instring = ""
+
+
+
+
+        Try
+            RS232.ReadTimeout = 1000
+            c = RS232.BytesToRead
+            RS232.Read(bytes, 1, c)
+
+            For i = 1 To c
+
+                TextRECEIVE.Text += bytes(i).ToString
+                TextRECEIVE.Text &= vbCrLf
+
+            Next
+
+            If bytes(1) = 1 And bytes(18) = 255 Then
+
+                For i = 1 To 8
+                    hi(i) = hz(i)
+                Next
+                hz(1) = bytes(2) * 256 + bytes(3)
+
+                TextBox1.Text = hz(1).ToString
+
+                hz(2) = bytes(4) * 256 + bytes(5)
+
+                TextBox2.Text = hz(2).ToString
+
+                hz(3) = bytes(6) * 256 + bytes(7)
+
+                TextBox3.Text = hz(3).ToString
+
+                hz(4) = bytes(8) * 256 + bytes(9)
+
+                TextBox4.Text = hz(4).ToString
+
+                hz(5) = bytes(10) * 256 + bytes(11)
+
+                TextBox5.Text = hz(5).ToString
+
+                hz(6) = bytes(12) * 256 + bytes(13)
+
+                TextBox6.Text = hz(6).ToString
+
+                hz(7) = bytes(14) * 256 + bytes(15)
+
+                TextBox7.Text = hz(7).ToString
+
+                hz(8) = bytes(16) * 256 + bytes(17)
+
+                TextBox8.Text = hz(8).ToString
+
+                For i = 1 To 8
+                    ab(i) = Math.Abs(hi(i) - hz(i))
+                Next
+                xi = xi + 1
+                change(xi) = ab(1) + ab(2) + ab(3) + ab(4) + ab(5)
+                sound1 = change(xi)
+                TextSOUND1.Text = sound1.ToString
+
+                If sound1 <= 2 * SOUNDCRIT1.Value Then                              REM 声音变化率进度条
+                    soundbar1.Value = 100 * sound1 / (SOUNDCRIT1.Value * 2 + 1)
+                Else
+                    soundbar1.Value = 100
+                End If
+
+                sum(xi) = hz(1) + hz(2) + hz(3) + hz(4) + hz(5)
+                sound2 = sum(xi)
+                TextSOUND2.Text = sound2.ToString
+
+                If sound2 <= 2 * SOUNDCRIT2.Value Then                              REM 声音总频率进度条
+                    soundbar2.Value = 100 * sound2 / (SOUNDCRIT2.Value * 2 + 1)
+                Else
+                    soundbar2.Value = 100
+                End If
+
+                ratio(xi) = (hz(6) + hz(8)) / (hz(7) + 0.01)
+                rgb = ratio(xi)
+                TextRGB.Text = rgb.ToString
+
+                If rgb <= 0.02 * RGBCTRIT.Value Then                              REM 颜色比率进度条
+                    colorbar.Value = 100 * rgb / (RGBCTRIT.Value * 0.02 + 1)
+                Else
+                    colorbar.Value = 100
+                End If
+
+                If xi = 309 Then
+                    xi = 0
+
+                End If
+
+
+
+
+            ElseIf bytes(1) = 2 And bytes(4) = 255 Then                      REM 内部光强-----------------2013.11.3
+
+
+                illu2 = 4.5 * (bytes(2) * 256 + bytes(3))
+                TextILLU2.Text = illu2.ToString
+
+
+
+            ElseIf bytes(1) = 3 And bytes(4) = 255 Then
+                hu = hu + 1
+                humi(hu) = (bytes(2) * 256 + bytes(3))
+                TextHUMI.Text = humi(hu).ToString
+
+                If humi(hu) <= 2 * HUMICRIT.Value Then                              REM 电阻进度条
+                    ProgressBarDIANZU.Value = 100 * humi(hu) / (HUMICRIT.Value * 2 + 1)
+                Else
+                    ProgressBarDIANZU.Value = 100
+                End If
+
+                dianzu = humi(hu)
+                If hu = 246 Then
+                    hu = 0
+                End If
+
+
+            ElseIf bytes(1) = 4 And bytes(4) = 255 Then
+
+                te = te + 1
+                temp(te) = 1023 - (bytes(2) * 256 + bytes(3))
+                qiwen = temp(te)
+                TextTEMP.Text = temp(te).ToString
+                TextWENDU.Text = ((temp(te) + 242) / 24.5).ToString             REM 温度换算公式
+                If te = 246 Then
+                    te = 0
+
+                End If
+
+
+
+
+            ElseIf bytes(1) = 5 And bytes(4) = 255 Then
+
+                ha = ha + 1
+                hard(ha) = (bytes(2) * 256 + bytes(3))
+
+                If ha = 40 Then
+                    ha = 0
+                End If
+
+            ElseIf bytes(1) = 6 And bytes(4) = 255 Then                      REM 把2改成了6-----------------2013.11.3
+
+                il = il + 1
+                illu(il) = (bytes(2) * 256 + bytes(3))
+                guangzhao = illu(il)
+                TextILLU.Text = illu(il).ToString
+
+                If illu(il) > ILLUCRIT.Value Then                 REM 光照检测
+                    TextGUANGZHAO.Text = "强光"
+                Else
+                    TextGUANGZHAO.Text = "弱光"
+                End If
+
+                If il = 246 Then
+                    il = 0
+
+                End If
+
+            ElseIf bytes(1) = 7 And bytes(4) = 255 Then                       REM 湿度测量
+
+                shidu = (bytes(2) * 256 + bytes(3)) / 100
+                TextSD.Text = shidu.ToString
+                TextSHIDU.Text = (shidu / 5).ToString
+
+
+            End If
+
+
+
+
+
+
+        Catch ex As Exception
+            MsgBox("读取错误！")
+        End Try
+    End Sub
+
+
+    Private Sub ButtonCLOSE_Click(sender As Object, e As EventArgs) Handles ButtonCLOSE.Click
+        Timer1.Enabled = False
+        RS232.Close()
+    End Sub
+
+
+    Private Sub SEND2_Click(sender As Object, e As EventArgs) Handles SEND2.Click
+        Timer6.Interval = NumerX.Value * 1000                                                               REM timer6
+        Timer6.Enabled = True
+        Timer2.Interval = timevalue.Value
+        Timer2.Enabled = True
+    End Sub
+
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        If jiance_flag = 0 Or jiance_flag2 = 0 Then                                                REM 10.9
+            autosend = autosend + 1                                                               REM 将两个发送信号的部分变成串行发送！！！！！！
+            If autosend = 1 Then
+                RS232.Write(Text1.Text & vbCr)
+            ElseIf autosend = 9 Then
+                RS232.Write(Text2.Text & vbCr)
+            ElseIf autosend = 18 Then
+                RS232.Write(Text3.Text & vbCr)
+            ElseIf autosend = 19 Then
+                RS232.Write(Text4.Text & vbCr)
+            ElseIf autosend = 20 Then
+                RS232.Write(Text5.Text & vbCr)
+            ElseIf autosend = 21 Then
+                RS232.Write(Text6.Text & vbCr)
+                jiance_flag = 1
+                autosend = 0
+                Timer3.Enabled = True                REM lingshi !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                Timer2.Enabled = False               REM lingshi!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            End If
+        End If
+    End Sub
+
+    Private Sub SENDSTOP_Click(sender As Object, e As EventArgs) Handles SENDSTOP.Click
+        Timer6.Enabled = False                                                               REM timer6
+        Timer2.Enabled = False
+    End Sub
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        jiance_flag2 = 1
+        Timer3.Interval = NumerSD.Value
+        Timer3.Enabled = True
+
+    End Sub
+
+    Private Sub Timer3_Tick(sender As Object, e As EventArgs) Handles Timer3.Tick           REM 将两个发送信号的部分变成串行发送！！！！！！！
+        REM shifei_flag = 1                               
+        If jiance_flag = 1 Then
+
+
+
+            If illu2 > NumerGZ2.Value Then                     REM  youwent!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                RS232.Write("t" & vbCr)
+            End If
+
+            If Date.Today.Month Mod NumerW.Value = 0 And Date.Today.Day = 1 And Date.Today.Hour = 1 Then
+                shifei_flag = 1
+            End If
+
+            If jiance_flag = 1 And NumerJJ1.Value <= Date.Today.Month And Date.Today.Month <= NumerJJ2.Value And guangzhao <= ILLUCRIT.Value And dianzu >= HUMICRIT.Value Then    REM 浇水施肥土壤疏松剂施放检测
+
+                RS232.Write("a" & vbCr)
+                REM -----------------------------------------季节设置部分在这上面！！！！！！！！！！
+                TextBUMP.Text = "浇水中"
+                Timer4.Interval = 125                     REM 浇水时隔设置
+                Timer2.Enabled = False
+
+                Timer3.Enabled = False
+                Timer4.Enabled = True
+                beep3 = 1
+            ElseIf (NumerJJ1.Value >= Date.Today.Month Or Date.Today.Month >= NumerJJ2.Value) And Date.Today.Hour = NumerWintertime.Value And (Date.Today.Minute = 0 Or Date.Today.Minute <= 3) And dianzu >= HUMICRIT.Value Then
+                RS232.Write("a" & vbCr)
+                REM -----------------------------------------冬季施肥！！！！！！！！！！
+                TextBUMP.Text = "浇水中"
+                Timer4.Interval = 125                     REM 浇水时隔设置
+                Timer2.Enabled = False
+
+                Timer3.Enabled = False
+                Timer4.Enabled = True
+                beep3 = 1
+            Else
+
+                TextBUMP.Text = "水泵关"
+            End If
+
+            If (NumerTF1.Value < Date.Now.Hour And Date.Now.Hour < NumerTF2.Value) Or qiwen >= TEMPCRIT.Value Or shidu > NumerSHIDU2.Value Then             REM 通风降温降湿检测
+
+                Texttf.Text = "开"
+                RS232.Write("g" & vbCr)
+            Else
+                Texttf.Text = "关"
+                RS232.Write("h" & vbCr)
+            End If
+
+            If NumerF1.Value <= Date.Today.Month And Date.Today.Month <= NumerF2.Value Then             REM 开花授粉检测
+                Textsf.Text = "开"
+                TextKAIHUA.Text = "开"          REM kaihua gai
+                RS232.Write("i" & vbCr)
+            Else
+                Textsf.Text = "关"
+                TextKAIHUA.Text = "关"            REM kaihua gai
+                RS232.Write("j" & vbCr)
+            End If
+
+            If NumerL1.Value > NumerL2.Value Then
+                If (NumerL1.Value <= Date.Today.Month Or Date.Today.Month <= NumerL2.Value) And guangzhao <= ILLUCRIT.Value Then      REM  补充关照
+                    Textdg.Text = "开"
+                    RS232.Write("k" & vbCr)
+                Else
+                    Textdg.Text = "关"
+                    RS232.Write("l" & vbCr)
+                End If
+            Else
+                If NumerL1.Value <= Date.Today.Month And Date.Today.Month <= NumerL2.Value And guangzhao <= ILLUCRIT.Value Then      REM  补充关照
+                    Textdg.Text = "开"
+                    RS232.Write("k" & vbCr)
+                Else
+                    Textdg.Text = "关"
+                    RS232.Write("l" & vbCr)
+                End If
+            End If
+
+            If SOUNDCRIT1.Value <= sound1 Or SOUNDCRIT2.Value <= sound2 Then      REM  虫害检测
+                Textch.Text = "危险"
+                beep1 = 1
+            Else
+                Textch.Text = "安全"
+                beep1 = 0
+            End If
+
+            If RGBCTRIT.Value * 0.01 <= rgb And guangzhao <= ILLUCRIT.Value Then      REM  植物生长状况检测
+                Textzs.Text = "有异常"
+                beep2 = 1
+            ElseIf RGBCTRIT.Value * 0.01 > rgb And guangzhao <= ILLUCRIT.Value Then
+                Textzs.Text = "良好"
+                beep2 = 0
+            End If
+
+            If (beep1 = 1 Or beep2 = 1) And beep3 = 0 And beep4 = 0 Then
+                RS232.Write("m" & vbCr)
+            Else
+                RS232.Write("n" & vbCr)
+            End If
+
+            If shidu < NumerSHIDU1.Value Then                         REM 加湿器检测
+                TextJIASHI.Text = "开"
+                RS232.Write("o" & vbCr)
+            Else
+                TextJIASHI.Text = "关"
+                RS232.Write("p" & vbCr)
+            End If
+
+
+
+            If illu2 < NumerGZ1.Value Then
+                RS232.Write("r" & vbCr)
+            End If
+
+            jiance_flag = 0
+            Timer2.Enabled = True                REM lingshi !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Timer3.Enabled = False               REM lingshi!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        End If
+
+
+    End Sub
+
+
+
+    Private Sub Timer4_Tick(sender As Object, e As EventArgs) Handles Timer4.Tick
+        bum = bum + 1
+        If RS232.IsOpen = False Then
+            RS232.Open()
+        End If
+
+        If bum <= 40 Then
+            RS232.Write("5" & vbCr)
+            RS232.Write("a" & vbCr)
+
+        End If
+
+        If bum = 40 Then
+            yingdu = (hard.Average / hard.Max) * 1000                           REM hard 从60改成了40
+            TextBox11.Text = hard.Max.ToString                                  REM!!!!!!!!!!!!!!!!!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            TextBox13.Text = (hard.Average / hard.Max).ToString                 REM!!!!!!!!!!!!!!!!!!!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            TextHARD.Text = hard.Average.ToString
+            If yingdu <= HARDCRIT.Value * 2 Then
+                ProgressBarHARD.Value = 100 * yingdu / (HARDCRIT.Value * 2 + 1)
+            Else
+                ProgressBarHARD.Value = 100
+            End If
+        End If
+
+        If bum = (40 * NumerT.Value) And shifei_flag = 1 Then     REM 400gai40    
+            RS232.Write("b" & vbCr)
+
+            RS232.Write("c" & vbCr)
+
+            TextBUMP.Text = "施肥中"
+            shifei_flag = 0
+
+        End If
+
+
+        If bum = 60 * NumerT.Value Then                 REM 600gai60
+
+            RS232.Write("b" & vbCr)
+            ha = 0
+            RS232.Write("d" & vbCr)
+            REM   RS232.Write("f" & vbCr)            REM -----------------------------------------
+            TextBUMP.Text = "水泵关"
+            If yingdu >= HARDCRIT.Value Then
+                RS232.Write("e" & vbCr)        
+                TextBUMP.Text = "施放疏松剂"
+            Else
+                jiance_flag = 0
+                autosend = 0
+                Timer2.Interval = timevalue.Value
+                Timer2.Enabled = True
+                Timer3.Interval = NumerSD.Value
+                Timer3.Enabled = True
+                bum = 0
+                beep3 = 0
+                Timer4.Enabled = False
+            End If
+        End If
+        If bum = 80 * NumerT.Value And yingdu >= HARDCRIT.Value Then  REM 
+
+            RS232.Write("f" & vbCr)
+            TextBUMP.Text = "水泵关"
+            jiance_flag = 0
+            autosend = 0
+            Timer2.Interval = timevalue.Value
+            Timer2.Enabled = True
+            Timer3.Interval = NumerSD.Value
+            Timer3.Enabled = True
+            bum = 0
+            beep3 = 0
+            Timer4.Enabled = False
+
+        End If
+        TextBox9.Text = bum.ToString
+
+    End Sub
+
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click                REM jian duankouguanbi!!!!!
+
+        jiance_flag2 = 0
+        Timer6.Enabled = False
+        Timer4.Enabled = False
+        Timer3.Enabled = False
+        Timer5.Enabled = False
+
+        RS232.Write("b" & vbCr)                                                                      REM 新代码，有待检验！！！
+        RS232.Write("d" & vbCr)
+        RS232.Write("f" & vbCr)
+        RS232.Write("h" & vbCr)
+        RS232.Write("j" & vbCr)
+        RS232.Write("l" & vbCr)
+        RS232.Write("n" & vbCr)
+        RS232.Write("p" & vbCr)
+        Textdg.Text = "关"
+        Textsf.Text = "关"
+        Texttf.Text = "关"
+        TextBUMP.Text = "水泵关"
+        TextJIASHI.Text = "关"
+    End Sub
+
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        SOUNDCRIT1.Value = sound1 * 2.5                                                      REM 自动校准和校准比值设置
+        SOUNDCRIT2.Value = sound2 * 2.5
+        RGBCTRIT.Value = rgb * 100 * 1.03
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click        REM 系统测试部分
+        Timer2.Enabled = False
+        Timer3.Enabled = False
+        Timer4.Enabled = False
+
+        RS232.Write("b" & vbCr)                                                                      REM 新代码，有待检验！！！
+        RS232.Write("d" & vbCr)
+        RS232.Write("f" & vbCr)
+        RS232.Write("h" & vbCr)
+        RS232.Write("j" & vbCr)
+        RS232.Write("l" & vbCr)
+        Textdg.Text = "关"
+        Textsf.Text = "关"
+        Texttf.Text = "关"
+        TextBUMP.Text = "水泵关"
+        TextRECEIVE.Text = "开始测试……"
+        TextRECEIVE.Text &= vbCrLf
+        Timer5.Interval = 5000
+        Timer5.Enabled = True
+
+
+    End Sub
+
+    Private Sub Timer5_Tick(sender As Object, e As EventArgs) Handles Timer5.Tick        REM 系统检测部分（分步进行）
+        ceshi = ceshi + 1
+        If ceshi = 1 Then
+            RS232.Write("a" & vbCr)
+            TextBUMP.Text = "浇水中"
+            TextRECEIVE.Text += "1.浇水测试中…"                                      REM 如超过框格，将“+”去掉
+            TextRECEIVE.Text &= vbCrLf
+            TextRECEIVE.WordWrap = True                                                REM 实验代码，需检验！！！！！！！！！！！！@@@@@@@
+        End If
+        If ceshi = 2 Then
+            RS232.Write("b" & vbCr)
+            RS232.Write("c" & vbCr)
+            TextBUMP.Text = "施肥中"
+            TextRECEIVE.Text += "2.浇水测试完成，施肥测试中…"
+            TextRECEIVE.Text &= vbCrLf
+        End If
+        If ceshi = 3 Then
+            RS232.Write("d" & vbCr)
+            RS232.Write("e" & vbCr)
+            TextBUMP.Text = "施放疏松剂"
+            TextRECEIVE.Text += "3.施肥测试完成，土壤疏松剂测试中…"
+            TextRECEIVE.Text &= vbCrLf
+        End If
+        If ceshi = 4 Then
+            RS232.Write("f" & vbCr)
+            RS232.Write("g" & vbCr)
+            TextBUMP.Text = "水泵关"
+            Texttf.Text = "开"
+            TextRECEIVE.Text += "4.土壤疏松剂测试完成，通风测试中…"
+            TextRECEIVE.Text &= vbCrLf
+        End If
+        If ceshi = 5 Then
+            RS232.Write("h" & vbCr)
+            RS232.Write("i" & vbCr)
+            Texttf.Text = "关"
+            Textsf.Text = "开"
+            TextRECEIVE.Text += "5.通风测试完成，授粉测试中…"
+            TextRECEIVE.Text &= vbCrLf
+        End If
+        If ceshi = 6 Then
+            RS232.Write("j" & vbCr)
+            RS232.Write("k" & vbCr)
+            Texttf.Text = "关"
+            Textdg.Text = "开"
+            TextRECEIVE.Text += "6.授粉测试完成，灯光测试中…"
+            TextRECEIVE.Text &= vbCrLf
+        End If
+        If ceshi = 7 Then
+            RS232.Write("l" & vbCr)
+            Textdg.Text = "关"
+            TextRECEIVE.Text += "7.灯光测试完成，测试完毕！"
+            ceshi = 0
+            Timer5.Enabled = False
+        End If
+    End Sub
+
+    Private Sub NumerX_ValueChanged(sender As Object, e As EventArgs) Handles NumerX.ValueChanged
+        Timer6.Interval = NumerX.Value * 1000
+    End Sub
+
+    Private Sub Timer6_Tick(sender As Object, e As EventArgs) Handles Timer6.Tick
+        If iround = 1 Then
+            mode6 = mode6 + 1
+        End If
+
+        Dim xi6, y1, y2 As Integer
+
+        Dim gr1 As Graphics
+        gr1 = GRA.CreateGraphics
+        Dim pen As New Pen(Color.Blue, 1)
+
+        REM 声音变化率
+        For xi6 = 1 To 501
+            isy1(xi6) = isy1(xi6 + 1)
+        Next
+        If sound1 <= 2 * SOUNDCRIT1.Value Then
+            isy1(502) = 80 * sound1 / (SOUNDCRIT1.Value * 2 + 1)
+        Else
+            isy1(502) = 80
+        End If
+        REM 声音总频率
+        For xi6 = 1 To 501
+            isy2(xi6) = isy2(xi6 + 1)
+        Next
+        If sound2 <= 2 * SOUNDCRIT2.Value Then
+            isy2(502) = 80 * sound2 / (SOUNDCRIT2.Value * 2 + 1)
+        Else
+            isy2(502) = 80
+        End If
+        REM 植物生长状况
+        For xi6 = 1 To 501
+            isz(xi6) = isz(xi6 + 1)
+        Next
+        If ratio(xi) <= 0.02 * RGBCTRIT.Value Then
+            isz(502) = 80 * ratio(xi) / (0.02 * RGBCTRIT.Value + 1)
+        Else
+            isz(502) = 80
+        End If
+        REM 光照强度
+        For xi6 = 1 To 501
+            igz(xi6) = igz(xi6 + 1)
+        Next
+        If illu(il) <= ILLUCRIT.Value * 2 Then
+            igz(502) = 80 * illu(il) / (2 * ILLUCRIT.Value + 1)
+        Else
+            igz(502) = 80
+        End If
+        REM 温度
+        For xi6 = 1 To 501
+            iwd(xi6) = iwd(xi6 + 1)
+        Next
+        If temp(te) <= TEMPCRIT.Value * 2 Then
+            iwd(502) = 80 * temp(te) / (2 * TEMPCRIT.Value + 1)
+        Else
+            iwd(502) = 80
+        End If
+        REM 湿度
+        For xi6 = 1 To 501
+            isd(xi6) = isd(xi6 + 1)
+        Next
+        If shidu <= NumerSHIDU2.Value * 2 Then
+            isd(502) = 80 * shidu / (2 * NumerSHIDU2.Value + 1)
+        Else
+            isd(502) = 80
+        End If
+        REM 土壤电阻
+        For xi6 = 1 To 501
+            idz(xi6) = idz(xi6 + 1)
+        Next
+        If humi(hu) <= HUMICRIT.Value * 2 Then
+            idz(502) = 80 * humi(hu) / (2 * HUMICRIT.Value + 1)
+        Else
+            idz(502) = 80
+        End If
+
+
+        If mode6 = 1 Then
+            REM 声音变化率
+            gr1.Clear(Color.White)
+            For xi7 = 1 To 501
+                y1 = 80 - isy1(xi7)
+                y2 = 80 - isy1(xi7 + 1)
+                gr1.DrawLine(pen, xi7, y1, xi7 + 1, y2)
+            Next
+            LabelNAME.Text = "声音变化率"
+
+        End If
+
+
+        If mode6 = 2 Then
+            REM 声音总频率
+            gr1.Clear(Color.White)
+            For xi7 = 1 To 501
+                y1 = 80 - isy2(xi7)
+                y2 = 80 - isy2(xi7 + 1)
+                gr1.DrawLine(pen, xi7, y1, xi7 + 1, y2)
+            Next
+            LabelNAME.Text = "声音总频率"
+
+        End If
+
+        If mode6 = 3 Then
+            REM 植物生长状况
+            gr1.Clear(Color.White)
+            For xi7 = 1 To 501
+                y1 = 80 - isz(xi7)
+                y2 = 80 - isz(xi7 + 1)
+                gr1.DrawLine(pen, xi7, y1, xi7 + 1, y2)
+            Next
+            LabelNAME.Text = "植物生长状况"
+ 
+        End If
+
+        If mode6 = 4 Then
+            REM 光照强度
+            gr1.Clear(Color.White)
+            For xi7 = 1 To 501
+                y1 = 80 - igz(xi7)
+                y2 = 80 - igz(xi7 + 1)
+                gr1.DrawLine(pen, xi7, y1, xi7 + 1, y2)
+            Next
+            LabelNAME.Text = "光照强度"
+       
+        End If
+
+        If mode6 = 5 Then
+            REM 温度
+            gr1.Clear(Color.White)
+            For xi7 = 1 To 501
+                y1 = 80 - iwd(xi7)
+                y2 = 80 - iwd(xi7 + 1)
+                gr1.DrawLine(pen, xi7, y1, xi7 + 1, y2)
+            Next
+            LabelNAME.Text = "空气温度"
+  
+        End If
+
+        If mode6 = 6 Then
+            REM 湿度
+            gr1.Clear(Color.White)
+            For xi7 = 1 To 501
+                y1 = 80 - isd(xi7)
+                y2 = 80 - isd(xi7 + 1)
+                gr1.DrawLine(pen, xi7, y1, xi7 + 1, y2)
+            Next
+            LabelNAME.Text = "空气湿度"
+     
+        End If
+
+        If mode6 = 7 Then
+            REM 土壤电阻
+            gr1.Clear(Color.White)
+            For xi7 = 1 To 501
+                y1 = 80 - idz(xi7)
+                y2 = 80 - idz(xi7 + 1)
+                gr1.DrawLine(pen, xi7, y1, xi7 + 1, y2)
+            Next
+            LabelNAME.Text = "土壤电阻"
+          
+        End If
+
+
+
+        If iround = 1 And mode6 >= 7 Then
+            mode6 = 0
+        End If
+
+    End Sub
+
+    Private Sub Label74_Click(sender As Object, e As EventArgs) Handles Label74.Click
+        If iround = 1 Then
+            iround = 0
+            Label74.Text = "循环：关"
+        ElseIf iround = 0 Then
+            iround = 1
+            Label74.Text = "循环：开"
+        End If
+
+    End Sub
+
+    Private Sub gsound1_Click(sender As Object, e As EventArgs) Handles gsound1.Click
+        mode6 = 1
+    End Sub
+
+    Private Sub gsound2_Click(sender As Object, e As EventArgs) Handles gsound2.Click
+        mode6 = 2
+    End Sub
+
+    Private Sub gplant_Click(sender As Object, e As EventArgs) Handles gplant.Click
+        mode6 = 3
+    End Sub
+
+    Private Sub glight_Click(sender As Object, e As EventArgs) Handles glight.Click
+        mode6 = 4
+    End Sub
+
+    Private Sub gtemp_Click(sender As Object, e As EventArgs) Handles gtemp.Click
+        mode6 = 5
+    End Sub
+
+    Private Sub ghumi_Click(sender As Object, e As EventArgs) Handles ghumi.Click
+        mode6 = 6
+    End Sub
+
+    Private Sub gohm_Click(sender As Object, e As EventArgs) Handles gohm.Click
+        mode6 = 7
+    End Sub
+
+
+
+    Private Sub GRA_Paint(sender As Object, e As PaintEventArgs)
+        Dim ipen As New Pen(Color.Black, 1)
+        e.Graphics.DrawLine(ipen, 1, 1, 5, 5)
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        RS232.Write("a" & vbCr)
+        TextBUMP.Text = "浇水中"
+        Timer4.Interval = 150                     REM 浇水时隔设置
+        Timer2.Enabled = False
+
+        Timer3.Enabled = False
+        Timer4.Enabled = True
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        If iround1 = 1 Then
+            RS232.Write("l" & vbCr)
+            Button6.Text = "灯光:关"
+            iround1 = 0
+        ElseIf iround1 = 0 Then
+            RS232.Write("k" & vbCr)
+            Button6.Text = "灯光:开"
+            iround1 = 1
+        End If
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        If iround2 = 1 Then
+            RS232.Write("h" & vbCr)
+            Button7.Text = "通风:关"
+            iround2 = 0
+        ElseIf iround2 = 0 Then
+            RS232.Write("g" & vbCr)
+            Button7.Text = "通风:开"
+            iround2 = 1
+        End If
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        If iround3 = 1 Then
+            RS232.Write("j" & vbCr)
+            Button8.Text = "授粉:关"
+            iround3 = 0
+        ElseIf iround3 = 0 Then
+            RS232.Write("i" & vbCr)
+            Button8.Text = "授粉:开"
+            iround3 = 1
+        End If
+    End Sub
+
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        If iround4 = 1 Then
+            RS232.Write("p" & vbCr)
+            Button9.Text = "加湿:关"
+            iround4 = 0
+        ElseIf iround4 = 0 Then
+            RS232.Write("o" & vbCr)
+            Button9.Text = "加湿:开"
+            iround4 = 1
+        End If
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+
+        jiance_flag2 = 0
+        Timer6.Enabled = False
+        Timer4.Enabled = False
+        Timer3.Enabled = False
+        Timer5.Enabled = False
+
+        RS232.Write("b" & vbCr)                                                                      REM 新代码，有待检验！！！
+        RS232.Write("d" & vbCr)
+        RS232.Write("f" & vbCr)
+        RS232.Write("h" & vbCr)
+        RS232.Write("j" & vbCr)
+        RS232.Write("l" & vbCr)
+        RS232.Write("n" & vbCr)
+        RS232.Write("p" & vbCr)
+        Textdg.Text = "关"
+        Textsf.Text = "关"
+        Texttf.Text = "关"
+        TextBUMP.Text = "水泵关"
+        TextJIASHI.Text = "关"
+    End Sub
+
+    Private Sub TextBox11_TextChanged(sender As Object, e As EventArgs) Handles TextBox11.TextChanged
+
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        RS232.Write("s" & vbCr)
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        If iround5 = 1 Then
+            RS232.Write("v" & vbCr)
+            Button12.Text = "遮光:关"
+            iround5 = 0
+        ElseIf iround5 = 0 Then
+            RS232.Write("u" & vbCr)
+            Button12.Text = "遮光:开"
+            iround5 = 1
+        End If
+        
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        If iround6 = 1 Then
+            RS232.Write("x" & vbCr)
+            Button13.Text = "透光:关"
+            iround6 = 0
+        ElseIf iround6 = 0 Then
+            RS232.Write("w" & vbCr)
+            Button13.Text = "透光:开"
+            iround6 = 1
+        End If
+    End Sub
+
+ 
+End Class

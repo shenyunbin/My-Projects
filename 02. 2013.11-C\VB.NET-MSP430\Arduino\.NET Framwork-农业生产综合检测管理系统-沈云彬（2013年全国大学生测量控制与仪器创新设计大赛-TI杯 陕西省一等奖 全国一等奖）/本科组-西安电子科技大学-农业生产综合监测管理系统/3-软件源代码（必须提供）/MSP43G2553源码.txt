@@ -1,0 +1,348 @@
+#include <msp430g2553.h>
+#define uchar unsigned char
+#define uint unsigned int
+int c,rx,ii,adc_flag;
+long int i=20000;
+void main()
+{
+	  WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
+
+	  if (CALBC1_1MHZ==0xFF)					// If calibration constant erased
+	  {
+	    while(1);                               // do not load, trap CPU!!
+	  }
+	  DCOCTL = 0;                               // Select lowest DCOx and MODx settings
+	  BCSCTL1 = CALBC1_1MHZ;                    // Set DCO
+	  DCOCTL = CALDCO_1MHZ;
+	  P1SEL = BIT1 + BIT2 ;                     // P1.1 = RXD, P1.2=TXD
+	  P1SEL2 = BIT1 + BIT2 ;                    // P1.1 = RXD, P1.2=TXD
+	  UCA0CTL1 |= UCSSEL_2;                     // SMCLK
+	  UCA0BR0 = 104;                            // 1MHz 9600
+	  UCA0BR1 = 0;                              // 1MHz 9600
+	  UCA0MCTL = UCBRS0;                        // Modulation UCBRSx = 1
+	  UCA0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
+
+
+
+	  ADC10CTL0 = ADC10SHT_2 + ADC10ON + ADC10IE; // ADC10ON, interrupt enabled
+	  ADC10CTL1 = INCH_5;                       // input A1 5
+	  ADC10AE0 |= BIT5;                         // PA.1 5 ADC option select
+
+	  P2DIR |= BIT0+BIT1+BIT2+BIT3+BIT4+BIT5;                            // Set P1.0 to output direction
+	  P1DIR |= BIT0+BIT4+BIT6+BIT7;
+//	  P2OUT &=~ BIT0+BIT1+BIT2+BIT3+BIT4+BIT5;
+
+//	  P1OUT &=~ BIT0+BIT4+BIT6+BIT7;
+
+	  P2OUT &=~ BIT0;
+	  P2OUT &=~ BIT1;
+	  P2OUT &=~ BIT2;
+	  P2OUT &=~ BIT3;
+	  P2OUT &=~ BIT4;
+	  P2OUT &=~ BIT5;
+	  P1OUT &=~ BIT0;
+	  P1OUT &=~ BIT4;
+	  P1OUT &=~ BIT6;
+	  P1OUT &=~ BIT7;
+
+
+  while(1)
+  {
+
+//	  ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
+//	  __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
+
+
+	    while(!(UCA0RXIFG&IFG2));
+
+	    rx=UCA0RXBUF;
+
+	    if(rx=='1')
+	    	    {
+
+	    		 P1OUT |= BIT4;
+	    	    }
+
+	    else if(rx=='2')
+	    {
+		 P2OUT &=~ BIT0+BIT1;
+		 P1OUT &=~ BIT4;
+
+		 adc_flag=0;
+
+		  ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
+		  __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
+
+//		 while(!adc_flag);
+
+//			for(ii=0;ii<2;ii++)
+//			{
+		    i=2000;
+		    while(i--);
+//			}
+
+		while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+		UCA0TXBUF = 0x02;                    // TX -> RXed character
+
+
+	    c=ADC10MEM;
+
+//	    i=200;
+//	    while(i--);
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c>>8;                    // TX -> RXed character
+
+//	    i=200;
+//	    while(i--);
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c;                    // TX -> RXed character
+
+//	    i=200;
+//	    while(i--);
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = 0xff;                    // TX -> RXed character
+
+//	    i=200;
+//	    while(i--);
+//
+
+
+	    }
+
+	    else if(rx=='3')
+	    {
+		 P2OUT |= BIT0;
+		 P2OUT &=~ BIT1;
+		 P1OUT &=~ BIT4;
+		 adc_flag=0;
+
+		  ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
+		  __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
+
+//		 while(!adc_flag);
+
+//			for(ii=0;ii<2;ii++)
+//			{
+		    i=2000;
+		    while(i--);
+//			}
+
+
+		while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+		UCA0TXBUF = 0x03;                    // TX -> RXed character
+
+
+	    c=ADC10MEM;
+
+//	    i=200;
+//	    while(i--);
+//
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c>>8;                    // TX -> RXed character
+
+//	    i=200;
+//	    while(i--);
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c;                    // TX -> RXed character
+
+//	    i=200;
+//	    while(i--);
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = 0xff;                    // TX -> RXed character
+
+//	    i=200;
+//	    while(i--);
+
+
+
+	    }
+
+
+
+
+
+
+	    else if(rx=='4')
+	    {
+			 P2OUT |= BIT1;
+			 P2OUT &=~ BIT0;
+			 P1OUT &=~ BIT4;
+			 adc_flag=0;
+
+			  ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
+			  __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
+
+	//		 while(!adc_flag);
+
+
+			    i=2000;
+			    while(i--);
+
+
+
+		while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+		UCA0TXBUF = 0x04;                    // TX -> RXed character
+
+
+	    c=ADC10MEM;
+
+
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c>>8;                    // TX -> RXed character
+
+
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c;                    // TX -> RXed character
+
+
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = 0xff;                    // TX -> RXed character
+
+
+
+
+	    }
+
+
+	    else if(rx=='5')
+	    {
+		 P2OUT |= BIT0;
+		 P2OUT &=~ BIT1;
+		 P1OUT &=~ BIT4;
+		 adc_flag=0;
+
+		  ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
+		  __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
+
+		    i=2000;
+		    while(i--);
+
+
+		while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+		UCA0TXBUF = 0x05;                    // TX -> RXed character
+
+	    c=ADC10MEM;
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c>>8;                    // TX -> RXed character
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = c;                    // TX -> RXed character
+
+	    while(!(IFG2&UCA0TXIFG));                // USCI_A0 TX buffer ready?
+
+	    UCA0TXBUF = 0xff;                    // TX -> RXed character
+
+	    }
+
+
+
+	    if(rx=='a')
+	    {
+	      P2OUT |= BIT3;
+	    }
+	    if(rx=='b')
+	    {
+	      P2OUT &=~ BIT3;
+	    }
+
+	    if(rx=='c')
+	    {
+	      P2OUT |= BIT4;
+	    }
+	    if(rx=='d')
+	    {
+	      P2OUT &=~ BIT4;
+	    }
+
+	    if(rx=='e')
+	    {
+	      P2OUT |= BIT5;
+	    }
+	    if(rx=='f')
+	    {
+	      P2OUT &=~ BIT5;
+	    }
+
+	    if(rx=='g')
+	    {
+	      P1OUT |= BIT6;
+	    }
+	    if(rx=='h')
+	    {
+	      P1OUT &=~ BIT6;
+	    }
+
+	    if(rx=='i')
+	    {
+	      P1OUT |= BIT7;
+	    }
+	    if(rx=='j')
+	    {
+	      P1OUT &=~ BIT7;
+	    }
+
+	    if(rx=='k')
+	    {
+	      P1OUT |= BIT0;
+	    }
+	    if(rx=='l')
+	    {
+	      P1OUT &=~ BIT0;
+	    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+}
+
+// ADC10 interrupt service routine
+#pragma vector=ADC10_VECTOR
+__interrupt void ADC10_ISR(void)
+{
+adc_flag=1;
+  __bic_SR_register_on_exit(CPUOFF);        // Clear CPUOFF bit from 0(SR)
+}
+
+
+
+
+
+
